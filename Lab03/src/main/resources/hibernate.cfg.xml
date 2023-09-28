@@ -22,11 +22,11 @@
         <!-- Show all executed SQL to console -->
         <property name="show_sql">true</property>
         <!-- Auto create table if not exist -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Entity mapping -->
-        <mapping class="Model.MobilePhone" />
-        <mapping class="Model.Manufacture" />
+        <mapping class="org.example.Model.MobilePhone" />
+        <mapping class="org.example.Model.Manufacture" />
 
 
     </session-factory>

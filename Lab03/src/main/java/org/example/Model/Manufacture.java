@@ -1,11 +1,10 @@
-package Model;
+package org.example.Model;
 
 
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 
 @Getter
@@ -13,17 +12,17 @@ import java.util.List;
 @Table(name = "manufacture")
 public class Manufacture {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue
+    private Long id;
 
     @Column(name = "manufacture_name", nullable = false, length = 128)
     private String name;
 
+    @Column(nullable = false)
 
     private String location;
 
-
+    @Column(nullable = false)
     private int employee;
 
     @OneToMany(mappedBy = "manufactures")
@@ -32,8 +31,8 @@ public class Manufacture {
     public Manufacture() {
     }
 
-    public Manufacture(String id,String name, String location, int employee) {
-        this.id = id;
+    public Manufacture(String name, String location, int employee) {
+
         this.name = name;
         this.location = location;
         this.employee = employee;
@@ -45,8 +44,7 @@ public class Manufacture {
         this.employee = employee;
         this.mobilePhone = mobilePhone;
     }
-
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,5 +62,25 @@ public class Manufacture {
 
     public void setMobilePhone(List<MobilePhone> mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getEmployee() {
+        return employee;
+    }
+
+    public List<MobilePhone> getMobilePhone() {
+        return mobilePhone;
     }
 }

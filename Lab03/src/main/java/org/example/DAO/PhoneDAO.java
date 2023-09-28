@@ -1,26 +1,21 @@
-package DAO;
-import Model.MobilePhone;
+package org.example.DAO;
+import org.example.Model.MobilePhone;
+import org.example.Utils.HibernateUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.example.HibernateUtils;
 import org.example.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class PhoneDAO implements Repository {
-    private  Session session;
-
     public PhoneDAO() {
 
     }
-    public PhoneDAO(Session session) {
-        this.session = session;
-    }
-
 
     @Override
     public boolean add(Object item) {
         try {
+            Session session = HibernateUtils.getSessionFactory().openSession();
 
             MobilePhone mobilePhone = (MobilePhone) item;
             session.beginTransaction();
@@ -28,22 +23,22 @@ public class PhoneDAO implements Repository {
             session.getTransaction().commit(); // Commit giao dịch nếu thành công
             return true;
         } catch (Exception e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback(); // Rollback giao dịch nếu có lỗi
-            }
             throw new RuntimeException(e);
         }
+
     }
 
 
     @Override
     public Object get(Object id) {
-        session.beginTransaction();
-        MobilePhone mobilePhone =session.find(MobilePhone.class, id);
-//        if(mobilePhone !=null) {
-//            return mobilePhone;
-//        }
-        return mobilePhone;
+        try {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            MobilePhone mobilePhone =session.find(MobilePhone.class, id);
+            return  mobilePhone;
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

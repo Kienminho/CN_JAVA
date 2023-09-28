@@ -1,13 +1,10 @@
-package Model;
+package org.example.Model;
 
 
-import com.sun.istack.NotNull;
-import org.hibernate.annotations.GenericGenerator;
+
+import org.hibernate.engine.jdbc.Size;
 
 import javax.persistence.*;
-import lombok.Data;
-import java.util.HashSet;
-import java.util.List;
 
 @Entity
 @Table(name = "mobile_phone")
@@ -15,24 +12,20 @@ import java.util.List;
 public class MobilePhone {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
-    @Column(name = "phone_name", nullable = false, length = 128)
-    @NotNull
-
+    @GeneratedValue
+    private Long id;
+    @Column(name = "phone_name", nullable = false)
     private String name;
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private int price;
-    @Column
-    @NotNull
+    @Column(nullable = false)
+
     private String color;
     @Column
-    @NotNull
+
     private String country;
     @Column
-    @NotNull
+
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -41,8 +34,7 @@ public class MobilePhone {
 
     public MobilePhone() {
     }
-    public MobilePhone(String id,String name, int price, String color, String country, int quantity, Manufacture manufactures) {
-        this.id = id;
+    public MobilePhone(String name, int price, String color, String country, int quantity, Manufacture manufactures) {
         this.name = name;
         this.price = price;
         this.color = color;
@@ -50,12 +42,20 @@ public class MobilePhone {
         this.quantity = quantity;
         this.manufactures = manufactures;
     }
+    public MobilePhone(String name, int price, String color, String country, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.color = color;
+        this.country = country;
+        this.quantity = quantity;
 
-    public String getId() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
