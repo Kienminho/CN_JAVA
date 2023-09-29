@@ -2,8 +2,6 @@ package org.example.Model;
 
 
 
-import org.hibernate.engine.jdbc.Size;
-
 import javax.persistence.*;
 
 @Entity
@@ -34,6 +32,15 @@ public class MobilePhone {
 
     public MobilePhone() {
     }
+
+    public MobilePhone(Long id, String name, int price, String color, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.color = color;
+        this.quantity = quantity;
+
+    }
     public MobilePhone(String name, int price, String color, String country, int quantity, Manufacture manufactures) {
         this.name = name;
         this.price = price;
@@ -50,6 +57,8 @@ public class MobilePhone {
         this.quantity = quantity;
 
     }
+
+
 
     public Long getId() {
         return id;
@@ -105,5 +114,10 @@ public class MobilePhone {
 
     public void setManufactures(Manufacture manufactures) {
         this.manufactures = manufactures;
+    }
+
+    public String toString() {
+
+        return "Phone [ id  = "+this.id+ ", name = "+ this.name+ ", color = "+this.color+", country = "+this.country+", price = "+this.price+ ", quantity = "+this.quantity+", manufacture = "+this.manufactures+ " ]";
     }
 }

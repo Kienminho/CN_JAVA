@@ -83,4 +83,9 @@ public class Manufacture {
     public List<MobilePhone> getMobilePhone() {
         return mobilePhone;
     }
+
+    public String toString() {
+
+        return "Manufacture [ id  = "+this.id+ " name ="+ this.name+ " location = "+this.location+ " employee = "+this.employee+ " ]";
+    }
 }

@@ -5,17 +5,16 @@ import org.example.Repository;
 import org.example.Utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManufactureDAO implements Repository {
-
-
     public ManufactureDAO() {
 
     }
-
     @Override
 
     public boolean add(Object item) {
@@ -39,33 +38,82 @@ public class ManufactureDAO implements Repository {
             Session session = HibernateUtils.getSessionFactory().openSession();
             session.beginTransaction();
             Manufacture manufacture =session.find(Manufacture.class, id);
-            if(manufacture !=null) {
-                return manufacture;
-            }
+            return  manufacture;
         } catch (HibernateException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 
     @Override
-    public List getAll() {
-        return null;
+    public List<Manufacture> getAll() {
+        List<Manufacture> listManufacture = new ArrayList<>();
+        try {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            String hql = "FROM Manufacture";
+            Query query = session.createQuery(hql);
+            listManufacture = query.list();
+        } catch (Exception e) {
+            // Xử lý ngoại lệ nếu cần
+        }
+        return listManufacture;
     }
 
     @Override
     public boolean deleteById(Object id) {
-        return false;
+        try {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            Manufacture manufacture = session.find(Manufacture.class, id);
+            session.delete(manufacture);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
     public boolean delete(Object item) {
-        return false;
+        try {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            session.delete(item);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean update(Object item) {
+
+        try {
+            Manufacture manufacture = (Manufacture) item;
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String hql = "UPDATE Manufacture SET name = :name, location = :location, employee = :employee WHERE id = :id";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("name", manufacture.getName());
+
+            query.setParameter("location", manufacture.getLocation());
+            query.setParameter("employee", manufacture.getEmployee());
+            query.setParameter("id", manufacture.getId());
+            int result = query.executeUpdate();
+            if(result > 0)  {
+                session.getTransaction().commit();
+                return true;
+            }
+
+        }
+        catch (HibernateException e) {
+            throw new RuntimeException(e);
+        }
         return false;
     }
 }
