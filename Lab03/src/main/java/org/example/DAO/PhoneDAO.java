@@ -19,7 +19,6 @@ public class PhoneDAO implements Repository {
     public boolean add(Object item) {
         try {
             Session session = HibernateUtils.getSessionFactory().openSession();
-
             MobilePhone mobilePhone = (MobilePhone) item;
             session.beginTransaction();
             session.save(mobilePhone);

@@ -30,6 +30,12 @@ public class Manufacture {
 
     public Manufacture() {
     }
+    public Manufacture(Long id, String name, String location, int employee) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.employee = employee;
+    }
 
     public Manufacture(String name, String location, int employee) {
 
