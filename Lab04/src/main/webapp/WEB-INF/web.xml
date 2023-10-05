@@ -4,6 +4,8 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
+
+    //login
     <servlet>
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.example.lab04.LoginServlet</servlet-class>
@@ -13,4 +15,28 @@
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/Login-Servlet</url-pattern>
     </servlet-mapping>
+
+    //url image
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>com.example.lab04.Images</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/images</url-pattern>
+    </servlet-mapping>
+
+    //url display /image1
+    <servlet>
+        <servlet-name>imageServlet1</servlet-name>
+        <servlet-class>com.example.lab04.ImageServlet1</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>imageServlet1</servlet-name>
+        <url-pattern>/image1</url-pattern>
+    </servlet-mapping>
+
+    imageServlet1
 </web-app>

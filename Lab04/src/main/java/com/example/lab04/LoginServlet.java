@@ -15,7 +15,9 @@ public class LoginServlet extends HttpServlet {
         userAccounts = new HashMap<>();
         userAccounts.put("admin", "admin");
         userAccounts.put("Kien", "123456");
+        userAccounts.put("Ngan", "hongngu");
     }
+
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.sendRedirect("index.jsp");
