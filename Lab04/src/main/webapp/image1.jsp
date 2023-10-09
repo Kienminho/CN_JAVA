@@ -9,8 +9,15 @@
 <html>
 <head>
     <title>Image 1</title>
+    <style>
+        img {
+            width: 500px;
+            height: 500px;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-    <img src="Images/image1.png">
+    <img  src="Images/image_1.jpg">
 </body>
 </html>

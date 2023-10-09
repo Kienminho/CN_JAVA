@@ -38,5 +38,25 @@
         <url-pattern>/image1</url-pattern>
     </servlet-mapping>
 
-    imageServlet1
+    //url display /image1
+    <servlet>
+        <servlet-name>imageServlet2</servlet-name>
+        <servlet-class>com.example.lab04.ImageServlet2</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>imageServlet2</servlet-name>
+        <url-pattern>/image2</url-pattern>
+    </servlet-mapping>
+
+    //product servlet
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.example.lab04.ProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/ProductServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
