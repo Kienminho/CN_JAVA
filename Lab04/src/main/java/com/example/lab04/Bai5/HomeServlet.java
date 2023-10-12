@@ -22,16 +22,12 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pageName = getPageName(req);
         String page = req.getParameter("page");
-        System.out.println(page);
+        if(pageName.isEmpty() && page != null) {
+            req.getRequestDispatcher("/"+page+".jsp").forward(req, resp);
+            return;
+        }
         displayPage(req, resp, pageName,page);
     }
-
-
-    @Override
-    public void destroy() {
-
-    }
-
 
     public static String getPageName(HttpServletRequest request) {
         String uri = request.getRequestURI();
@@ -41,19 +37,24 @@ public class HomeServlet extends HttpServlet {
 
     public static void displayPage(HttpServletRequest req, HttpServletResponse resp, String pageName, String page) throws ServletException, IOException {
 
-        if(pageName.equals("Bai5")&&!(page==null || page.isEmpty())) {
-
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/"+page+".jsp");
-            dispatcher.forward(req, resp);
-
-        } else if (pageName.equals("Bai5")&&(page==null || page.isEmpty())) {
+         if (pageName.equals("Bai5")&&(page==null || page.isEmpty())) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/home.jsp");
             dispatcher.forward(req, resp);
 
         } else {
+
             RequestDispatcher dispatcher = req.getRequestDispatcher("/"+pageName);
             dispatcher.forward(req, resp);
         }
     }
+
+
+    @Override
+    public void destroy() {
+
+    }
+
+
+
 
 }
