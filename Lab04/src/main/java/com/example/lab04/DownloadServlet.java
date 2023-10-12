@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 @WebServlet(name = "downloadServlet", value = "/download")
 
@@ -28,15 +25,15 @@ public class DownloadServlet extends HttpServlet {
             resp.getWriter().write("File not found");
             return;
         }
+        String applicationPath = getServletContext().getRealPath("");
+        String uploadFilePath = applicationPath + File.separator + "uploads";
+        //create a input stream
+        InputStream fileStream = new FileInputStream(uploadFilePath +"/"+ fileName);
+        System.out.println(fileStream);
+        if (fileStream == null) {
+            System.out.println(32);
 
-
-        //check file on server
-        String filePath = getServletContext().getRealPath("/files/") + File.separator+fileName;
-
-        File file = new File(filePath);
-
-        if(!file.exists()) {
-            resp.getWriter().write("File not found on the server");
+            resp.getWriter().println("File not found");
             return;
         }
 
@@ -53,23 +50,15 @@ public class DownloadServlet extends HttpServlet {
         }
 
         //download file
-
-        try (FileInputStream fileInputStream = new FileInputStream(file);
-             OutputStream outputStream = resp.getOutputStream()) {
-
-            byte[] buffer = new byte[4096];
-            int bytesRead = -1;
-
-            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-
-                if (speed > 0) {
-                    Thread.sleep(1000 / speed);
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        OutputStream outputStream = resp.getOutputStream();
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = fileStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
         }
+
+        fileStream.close();
+        outputStream.close();
 
 
     }

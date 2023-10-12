@@ -18,6 +18,8 @@
     </style>
 </head>
 <body>
-    <img  src="Images/image_1.jpg">
+<img src="../resources/Images/image_1.jpg" alt="Your Image">
+
+
 </body>
 </html>

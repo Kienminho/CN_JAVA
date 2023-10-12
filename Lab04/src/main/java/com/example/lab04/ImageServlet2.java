@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 @WebServlet(name = "imageServlet2", value = "/image2")
 public class ImageServlet2 extends HttpServlet {
@@ -20,32 +20,32 @@ public class ImageServlet2 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        // Đường dẫn tới tập tin hình ảnh trên máy chủ
-        ServletContext context = getServletContext();
-        String webAppPath = context.getRealPath("/");
+        // Load an image file (you need to replace this path with your actual image path)
+        InputStream imageStream = getClass().getClassLoader().getResourceAsStream("Images/image_2.jpg");
 
-        // Xây dựng đường dẫn đến thư mục Images
-        String imagePath = webAppPath + "Images" + File.separator + "image_2.jpg";
-
-
-        // Lấy tên tập tin từ đường dẫn hình ảnh
-        String fileName = new File(imagePath).getName();
-
-        // Thiết lập các header để yêu cầu trình duyệt tải xuống thay vì hiển thị
-        res.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-        res.setHeader("Content-Type", "application/octet-stream");
-        res.setHeader("Content-Transfer-Encoding", "binary");
-
-        // Đọc dữ liệu từ tập tin và gửi nó đến client
-        try (FileInputStream fileInputStream = new FileInputStream(imagePath)) {
-            byte[] buffer = new byte[4096];
-            int bytesRead = -1;
-
-            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                res.getOutputStream().write(buffer, 0, bytesRead);
-            }
+        if (imageStream == null) {
+            res.getWriter().println("Image not found");
+            return;
         }
+
+        // Set the content type to force download
+        res.setContentType("application/octet-stream");
+
+        // Set the content-disposition header to force download
+        res.setHeader("Content-Disposition", "attachment; filename=image2.jpg");
+
+        // Write the image to the response
+        OutputStream outputStream = res.getOutputStream();
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = imageStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        imageStream.close();
+        outputStream.close();
     }
+
 
     @Override
     public void destroy() {
