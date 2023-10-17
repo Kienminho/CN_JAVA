@@ -2,10 +2,7 @@ package com.example.lab05;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -19,10 +16,23 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie cookie = new Cookie("username", "");
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        resp.addCookie(cookie);
+        HttpSession session = req.getSession(); // lấy session
+        if(session != null) {
+            session.invalidate();
+        }
+        Cookie[] cookies = req.getCookies(); //lấy cookies
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    Cookie c = new Cookie("username", "");
+                    c.setMaxAge(0);
+                    c.setPath("/");
+                    resp.addCookie(c);
+
+                }
+            }
+        }
+
 
         resp.sendRedirect("/auth/login");
     }

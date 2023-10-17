@@ -64,7 +64,7 @@
         })
             .then(res =>  res.json())
             .then(data => {
-                if(!data.statusCode == 200) {
+                if(data.statusCode != 200) {
                     const eMessage =$(".message");
                     eMessage.text(data.message);
                     eMessage.removeClass("d-none");

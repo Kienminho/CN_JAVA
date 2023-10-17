@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.hibernate.Session;
 
 @WebServlet(name = "loginServlet", value = "/auth/login")
 public class LoginServlet extends HttpServlet {
@@ -26,7 +27,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie[] cookies = req.getCookies();
+        HttpSession session = req.getSession();
+        Cookie[] cookies = req.getCookies(); //lấy cookies
         String savedUsername = null;
         if(cookies != null) {
             for (Cookie cookie : cookies) {
@@ -37,9 +39,9 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         }
-        if(savedUsername != null) {
+        if(savedUsername != null || session.getAttribute("username") != null) {
             System.out.println(35);
-            req.setAttribute("username", savedUsername);
+            //req.setAttribute("username", savedUsername);
             resp.sendRedirect("/home");
             return;
         }
@@ -56,6 +58,10 @@ public class LoginServlet extends HttpServlet {
         if(userExist != null) {
             statusCode =200;
             if(password.equals(userExist.getPassword())) {
+                HttpSession session = req.getSession();
+                session.setAttribute("username", username);
+                // thời gian tồn tại của session là 30p
+                session.setMaxInactiveInterval(30*60);
                 if(rememberMe) {
                     Cookie cookie = new Cookie("username", username);
                     cookie.setMaxAge(maxAgeCookie);

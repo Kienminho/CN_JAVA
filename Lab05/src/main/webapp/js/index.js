@@ -54,9 +54,12 @@ function displayMessage(containerMessage, message) {
 
 //xác nhân xoá sản phẩm
 function confirmDelete(productId) {
+
+    //text xác nhận xoá sản phẩm
+
+    $('.confirm-delete').html(`Bạn có đồng ý xoá sản phẩm có ID là ${productId} không?`);
     // Hiển thị modal xác nhận xoá (nếu cần)
     $('#confirmDeleteModal').modal('show');
-
     // Lưu productId vào thuộc tính data-product-id của modal để sử dụng sau này
     $('#confirmDeleteModal').data('product-id', productId);
     console.log(productId);

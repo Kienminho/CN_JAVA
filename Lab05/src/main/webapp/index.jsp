@@ -83,7 +83,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="confirm-delete modal-body">
                 Bạn có chắc chắn muốn xoá sản phẩm này không?
             </div>
             <div class="modal-footer">
