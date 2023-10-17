@@ -12,7 +12,7 @@ java -jar Program.jar "your connect string"
 Example: java -jar Program.jar "jdbc:mysql://localhost:3306/productmanagement?user=root&password="
 
 
-# Hướng dẫn chạy Lab03
+# Hướng dẫn chạy Lab03 và Lab05
 Step1: Find to main/resources/hibernate.cfg.xml
 
 Step2: Edit: username, password, database name
